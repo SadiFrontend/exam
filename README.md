@@ -17,9 +17,6 @@ This project is an educational web application built with pure HTML, CSS, and Ja
 Ideal for beginners learning front-end development or preparing for exams. The content is sourced from provided documents and organized into navigable sections.
 
 ## Features
-
-- **Bilingual Support** 🌐: Toggle between English and Uzbek.
-- **Dark Mode** 🌙: Switch between light and dark themes.
 - **Hidable Sidebar** 📑: Collapse/expand navigation with a hamburger menu.
 - **Study Sections** 📚: 35+ topics with explanations, code examples, and bilingual content.
 - **Interactive Exam** ✅: 20 multiple-choice questions with instant scoring and detailed feedback (correct/incorrect answers shown).
