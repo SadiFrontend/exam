@@ -19,7 +19,6 @@ Ideal for beginners learning front-end development or preparing for exams. The c
 ## Features
 - **Hidable Sidebar** 📑: Collapse/expand navigation with a hamburger menu.
 - **Study Sections** 📚: 35+ topics with explanations, code examples, and bilingual content.
-- **Interactive Exam** ✅: 20 multiple-choice questions with instant scoring and detailed feedback (correct/incorrect answers shown).
 - **Responsive Design** 📱: Works on desktop and mobile.
 - **No Dependencies**: Pure vanilla JS and CSS for easy deployment.
 
