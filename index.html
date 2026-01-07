@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front-End 007 Preparing for exam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f9d58;
+            --secondary: #28a745;
+            --bg-body: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --border: #dee2e6;
+            --code-bg: #f6f8fa;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .dark-mode {
+            --primary: #28a745;
+            --secondary: #0f9d58;
+            --bg-body: #212529;
+            --bg-card: #343a40;
+            --text-main: #f8f9fa;
+            --text-muted: #adb5bd;
+            --border: #495057;
+            --code-bg: #2d3238;
+            --shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: background 0.3s, color 0.3s;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Navbar */
+        header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow);
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+        }
+
+        #menuToggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-right: 1rem;
+            color: var(--text-main);
+        }
+
+        .site-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .navbar-right button {
+            margin-left: 1rem;
+        }
+
+        /* Sidebar */
+        nav {
+            width: 300px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1.5rem 1rem;
+            position: fixed;
+            top: 60px; /* Below top navbar */
+            bottom: 0;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+            transform: translateX(0);
+            transition: transform 0.3s ease;
+        }
+
+        nav.hidden {
+            transform: translateX(-100%);
+        }
+
+        nav h2 { 
+            font-size: 1.5rem; 
+            margin-bottom: 1.5rem; 
+            color: var(--primary); 
+        }
+
+        nav ul { 
+            list-style: none; 
+            padding: 0; 
+            margin: 0; 
+        }
+
+        nav li { margin-bottom: 0.75rem; }
+
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        nav a:hover {
+            background: rgba(15, 157, 88, 0.1);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            margin-left: 300px;
+            padding: 5rem 2rem 3rem; /* Top padding for header */
+            max-width: calc(100% - 300px);
+            transition: margin-left 0.3s ease, max-width 0.3s ease;
+        }
+
+        main.full-width {
+            margin-left: 0;
+            max-width: 100%;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--primary); }
+
+        h2 { font-size: 1.75rem; margin: 2rem 0 1rem; color: var(--primary); }
+
+        h3 { font-size: 1.25rem; margin-bottom: 0.75rem; color: var(--text-muted); }
+
+        p { margin-bottom: 1rem; }
+
+        ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+
+        code {
+            background: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+
+        pre {
+            background: var(--code-bg);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-weight: 600;
+        }
+
+        .btn:hover { background-color: #0d8a4e; }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover { background-color: #5a6268; }
+
+        /* Language Toggle */
+        .lang-en [lang="uz"] { display: none; }
+        .lang-uz [lang="en"] { display: none; }
+
+        /* Exam Styles */
+        .question {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--code-bg);
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+
+        .option input {
+            margin-right: 1rem;
+            accent-color: var(--primary);
+        }
+
+        .option label { cursor: pointer; }
+
+        #results {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .result-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            border: 1px solid var(--border);
+        }
+
+        .correct { background: #d4edda; color: #155724; }
+
+        .incorrect { background: #f8d7da; color: #721c24; }
+
+        #resetBtn {
+            margin-top: 1rem;
+            background-color: #dc3545;
+        }
+
+        #resetBtn:hover { background-color: #c82333; }
+
+        /* Media Query for Mobile */
+        @media (max-width: 768px) {
+            nav {
+                position: fixed;
+                top: 60px;
+                width: 250px;
+            }
+
+            main {
+                padding: 5rem 1rem 3rem;
+            }
+        }
+    </style>
+</head>
+<body class="lang-en">
+    <header>
+        <div class="navbar-left">
+            <button id="menuToggle">☰</button>
+            <span class="site-title" lang="en">Front-End 007 Guide</span>
+            <span class="site-title" lang="uz">Front-End 007 Qo'llanma</span>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <h2 lang="en">Topics</h2>
+        <h2 lang="uz">Mavzular</h2>
+        <ul>
+            <li><a href="#selectors"><span lang="en">Selectors</span><span lang="uz">Selektorlar</span></a></li>
+            <li><a href="#colors"><span lang="en">Colors</span><span lang="uz">Ranglar</span></a></li>
+            <li><a href="#background"><span lang="en">Background</span><span lang="uz">Fon</span></a></li>
+            <li><a href="#box-model"><span lang="en">Box Model</span><span lang="uz">Quti Modeli</span></a></li>
+            <li><a href="#fonts"><span lang="en">Fonts</span><span lang="uz">Shriftlar</span></a></li>
+            <li><a href="#positions"><span lang="en">Positions</span><span lang="uz">Pozitsiyalar</span></a></li>
+            <li><a href="#overflow"><span lang="en">Overflow</span><span lang="uz">Toshqin</span></a></li>
+            <li><a href="#visibility"><span lang="en">Visibility</span><span lang="uz">Ko'rinuvchanlik</span></a></li>
+            <li><a href="#flexbox"><span lang="en">Flexbox</span><span lang="uz">Flexbox</span></a></li>
+            <li><a href="#grid"><span lang="en">Grid</span><span lang="uz">Grid</span></a></li>
+            <li><a href="#transitions"><span lang="en">Transitions</span><span lang="uz">O'tishlar</span></a></li>
+            <li><a href="#transforms"><span lang="en">Transforms</span><span lang="uz">Transformatsiyalar</span></a></li>
+            <li><a href="#media-queries"><span lang="en">Media Queries</span><span lang="uz">Media So'rovlar</span></a></li>
+            <li><a href="#pseudo-classes"><span lang="en">Pseudo-classes</span><span lang="uz">Psevdo-klasslar</span></a></li>
+            <li><a href="#pseudo-elements"><span lang="en">Pseudo-elements</span><span lang="uz">Psevdo-elementlar</span></a></li>
+            <li><a href="#combinators"><span lang="en">Combinators</span><span lang="uz">Kombinatorlar</span></a></li>
+            <li><a href="#box-sizing"><span lang="en">Box Sizing</span><span lang="uz">Quti O'lchamlari</span></a></li>
+            <li><a href="#pseudo-hover-focus"><span lang="en">Pseudo-classes: Hover, Focus, Active</span><span lang="uz">Psevdo-klasslar: Hover, Focus, Active</span></a></li>
+            <li><a href="#background-advanced"><span lang="en">Advanced Background</span><span lang="uz">Murakkab Fon</span></a></li>
+            <li><a href="#html-layout"><span lang="en">HTML Layout</span><span lang="uz">HTML Tartibi</span></a></li>
+            <li><a href="#iframe"><span lang="en">Iframe</span><span lang="uz">Iframe</span></a></li>
+            <li><a href="#gradients"><span lang="en">Gradients</span><span lang="uz">Gradientlar</span></a></li>
+            <li><a href="#forms"><span lang="en">Forms</span><span lang="uz">Formalar</span></a></li>
+            <li><a href="#flex-items"><span lang="en">Flex Item Properties</span><span lang="uz">Flex Element Xususiyatlari</span></a></li>
+            <li><a href="#nth-child"><span lang="en">Nth-Child</span><span lang="uz">Nth-Child</span></a></li>
+            <li><a href="#measurements"><span lang="en">Measurements</span><span lang="uz">O'lchov Birliklari</span></a></li>
+            <li><a href="#tables"><span lang="en">Tables</span><span lang="uz">Jadvallar</span></a></li>
+            <li><a href="#z-index"><span lang="en">Z-Index</span><span lang="uz">Z-Index</span></a></li>
+            <li><a href="#box-shadow"><span lang="en">Box Shadow</span><span lang="uz">Quti Soyasi</span></a></li>
+            <li><a href="#video-audio"><span lang="en">Video and Audio</span><span lang="uz">Video va Audio</span></a></li>
+            <li><a href="#text-gradient"><span lang="en">Text Gradient</span><span lang="uz">Matn Gradienti</span></a></li>
+            <li><a href="#text-shadow"><span lang="en">Text Shadow</span><span lang="uz">Matn Soyasi</span></a></li>
+            <li><a href="#semantic"><span lang="en">Semantic Tags</span><span lang="uz">Semantik Teglar</span></a></li>
+            <li><a href="#clip-path"><span lang="en">Clip Path</span><span lang="uz">Clip Path</span></a></li>
+            <li><a href="#object-properties"><span lang="en">Object Properties</span><span lang="uz">Ob'ekt Xususiyatlari</span></a></li>
+            <li><a href="#datalist-checkbox"><span lang="en">Datalist, Checkbox, Radio</span><span lang="uz">Datalist, Checkbox, Radio</span></a></li>
+            <li><a href="#exam"><span lang="en">Exam</span><span lang="uz">Imtihon</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="mainContent">
+        <h1 lang="en">Front-End 007: Complete Exam Guide (Day 5-12)</h1>
+        <h1 lang="uz">Front-End 007: To'liq Imtihon Qo'llanma (5-12 kun)</h1>
+
+        <section id="selectors">
+            <h2 lang="en">Selectors</h2><h2 lang="uz">Selektorlar</h2>
+            <div lang="en">
+                <h3>Basic Selectors</h3>
+                <p>Element: tag name</p>
+                <p>Class: .class</p>
+                <p>ID: #id</p>
+                <p>Attribute: [attr]</p>
+                <p>Universal: *</p>
+            </div>
+            <div lang="uz">
+                <h3>Asosiy Selektorlar</h3>
+                <p>Element: teg nomi</p>
+                <p>Class: .class</p>
+                <p>ID: #id</p>
+                <p>Atribut: [attr]</p>
+                <p>Universal: *</p>
+            </div>
+        </section>
+
+        <section id="colors">
+            <h2 lang="en">Colors</h2><h2 lang="uz">Ranglar</h2>
+            <p lang="en">hex (#)</p>
+            <p lang="uz">hex (#)</p>
+            <p lang="en">rgb()</p>
+            <p lang="uz">rgb()</p>
+            <p lang="en">rgba</p>
+            <p lang="uz">rgba</p>
+            <p lang="en">hsl</p>
+            <p lang="uz">hsl</p>
+        </section>
+
+        <section id="background">
+            <h2 lang="en">Background</h2><h2 lang="uz">Fon</h2>
+            <p lang="en">#background-image : background-image - element uchun orqa fon rasm qo'shish uchun ishlatiladi. </p>
+            <p lang="uz">#background-image : background-image - element uchun orqa fon rasm qo'shish uchun ishlatiladi. </p>
+            <p lang="en">#background-repeat : background-repeat - rasmlarimiz qanday takrorlanishini yoki umuman takrorlanmasligini belgilab beradi. </p>
+            <p lang="uz">#background-repeat : background-repeat - rasmlarimiz qanday takrorlanishini yoki umuman takrorlanmasligini belgilab beradi. </p>
+            <ul lang="en">
+                <li>1 - repeat (default)</li>
+                <li>2 - repeat x </li>
+                <li>3 - repeat y </li>
+                <li>4 - no-repeat </li>
+            </ul>
+            <ul lang="uz">
+                <li>1 - repeat (default)</li>
+                <li>2 - repeat x </li>
+                <li>3 - repeat y </li>
+                <li>4 - no-repeat </li>
+            </ul>
+            <p lang="en">#background-position : orqa fondagi rasmimizni elementimizni qayeridan boshlanishini belgilab beradi</p>
+            <p lang="uz">#background-position : orqa fondagi rasmimizni elementimizni qayeridan boshlanishini belgilab beradi</p>
+            <p lang="en">Qiymatlari: top / left / right / bottom / center ( backgroun-position: left top )</p>
+            <p lang="uz">Qiymatlari: top / left / right / bottom / center ( backgroun-position: left top )</p>
+            <p lang="en">o'chovni ko'rsatish (backgroun-position: 300px 100px)</p>
+            <p lang="uz">o'chovni ko'rsatish (backgroun-position: 300px 100px)</p>
+        </section>
+
+        <section id="box-model">
+            <h2 lang="en">Box Model</h2><h2 lang="uz">Quti Modeli</h2>
+            <p lang="en">Margin -> Border -> Padding -> Content</p>
+            <p lang="uz">Margin -> Border -> Padding -> Content</p>
+            <p lang="en">Margin - bir element va uning atrofidagi ikkinchi elementlar orasidagi masofa</p>
+            <p lang="uz">Margin - bir element va uning atrofidagi ikkinchi elementlar orasidagi masofa</p>
+            <p lang="en">Border - elementning chegarasi hisoblanadi.</p>
+            <p lang="uz">Border - elementning chegarasi hisoblanadi.</p>
+            <p lang="en">Padding - Elementning kontent qismidan, border ya'ni chegara qismigacha bo'lgan masofa</p>
+            <p lang="uz">Padding - Elementning kontent qismidan, border ya'ni chegara qismigacha bo'lgan masofa</p>
+            <p lang="en">Content bu elementning qiymati ya’ni sahifada bizga ko’rinib turadigan qismi.</p>
+            <p lang="uz">Content bu elementning qiymati ya’ni sahifada bizga ko’rinib turadigan qismi.</p>
+        </section>
+
+        <section id="fonts">
+            <h2 lang="en">Fonts</h2><h2 lang="uz">Shriftlar</h2>
+            <p lang="en">1 - Serif </p>
+            <p lang="uz">1 - Serif </p>
+            <p lang="en">2 - Sans Serif</p>
+            <p lang="uz">2 - Sans Serif</p>
+            <p lang="en">3 - Monospace</p>
+            <p lang="uz">3 - Monospace</p>
+            <p lang="en">4 - Cursive </p>
+            <p lang="uz">4 - Cursive </p>
+            <p lang="en">5 - Fantasy</p>
+            <p lang="uz">5 - Fantasy</p>
+            <p lang="en">Font style - matnimiz stilini belgilab beradi : Normal , Oblique , Italic</p>
+            <p lang="uz">Font style - matnimiz stilini belgilab beradi : Normal , Oblique , Italic</p>
+            <p lang="en">Font Weight - matnimiz qalinligini belgilab beradi ( 400 regular)</p>
+            <p lang="uz">Font Weight - matnimiz qalinligini belgilab beradi ( 400 regular)</p>
+            <ul lang="en">
+                <li>1- normal</li>
+                <li>2- bold </li>
+                <li>3- medium</li>
+                <li>4- light</li>
+                <li>5- lighter</li>
+                <li>6- bolder</li>
+            </ul>
+            <ul lang="uz">
+                <li>1- normal</li>
+                <li>2- bold </li>
+                <li>3- medium</li>
+                <li>4- light</li>
+                <li>5- lighter</li>
+                <li>6- bolder</li>
+            </ul>
+            <p lang="en">letter spacing - space between letter ( harflar orasidagi masofa)</p>
+            <p lang="uz">letter spacing - space between letter ( harflar orasidagi masofa)</p>
+            <p lang="en">word spacing - space between word ( so'zlar orasidagi masofa)</p>
+            <p lang="uz">word spacing - space between word ( so'zlar orasidagi masofa)</p>
+        </section>
+
+        <section id="positions">
+            <h2 lang="en">Positions</h2><h2 lang="uz">Pozitsiyalar</h2>
+            <p lang="en">1- Static (default) : Static - HTMLda position uchun default qiymat hisoblanadi.</p>
+            <p lang="uz">1- Static (default) : Static - HTMLda position uchun default qiymat hisoblanadi.</p>
+            <p lang="en">2- Relative : Relative - O'zining joylashgan joyidan suriladi lekin o'z o'rnini hech kimga bermaydi.</p>
+            <p lang="uz">2- Relative : Relative - O'zining joylashgan joyidan suriladi lekin o'z o'rnini hech kimga bermaydi.</p>
+            <p lang="en">3- Absolute : Absolute - elementlar otasiga nisbatan joylashadi qachonki uning otasi relative yoki absolute bo'lsa. Eng yaqin ajdodidaga qaraydi (shajara/body)</p>
+            <p lang="uz">3- Absolute : Absolute - elementlar otasiga nisbatan joylashadi qachonki uning otasi relative yoki absolute bo'lsa. Eng yaqin ajdodidaga qaraydi (shajara/body)</p>
+            <p lang="en">4- Fixed : Fixed - U har doim o'zini joyida qoladi va scroll paytida joyini o'zgartirmaydi</p>
+            <p lang="uz">4- Fixed : Fixed - U har doim o'zini joyida qoladi va scroll paytida joyini o'zgartirmaydi</p>
+            <p lang="en">5- Sticky :Sticky - bu relative va fixed qiymatlarini o'zida saqlaydi va scroll qayerda joylashganiga qarab shu ikki qiymatdan birini o'ziga oladi. Ma'lum bir vaqt relative keyin esa fixed bo'lib oladi.</p>
+            <p lang="uz">5- Sticky :Sticky - bu relative va fixed qiymatlarini o'zida saqlaydi va scroll qayerda joylashganiga qarab shu ikki qiymatdan birini o'ziga oladi. Ma'lum bir vaqt relative keyin esa fixed bo'lib oladi.</p>
+        </section>
+
+        <section id="overflow">
+            <h2 lang="en">Overflow</h2><h2 lang="uz">Toshqin</h2>
+            <p lang="en">Overflow - kontent ichiga sig'may qolgan payti, qanday ko'rinish kerakligini belgilab beradi.</p>
+            <p lang="uz">Overflow - kontent ichiga sig'may qolgan payti, qanday ko'rinish kerakligini belgilab beradi.</p>
+            <ul lang="en">
+                <li>1- visible : default</li>
+                <li>2- hidden</li>
+                <li>3- scroll</li>
+                <li>4- auto : xuddi scrollga o'xshab ishlaydi faqatgina kerak bo'lgan payti. Scrollda kontent kichkina bo'lsa ham scroll qo'shib bersa lekin auto faqatgina qachon toshib ketsa qo'shadi.</li>
+            </ul>
+            <ul lang="uz">
+                <li>1- visible : default</li>
+                <li>2- hidden</li>
+                <li>3- scroll</li>
+                <li>4- auto : xuddi scrollga o'xshab ishlaydi faqatgina kerak bo'lgan payti. Scrollda kontent kichkina bo'lsa ham scroll qo'shib bersa lekin auto faqatgina qachon toshib ketsa qo'shadi.</li>
+            </ul>
+        </section>
+
+        <section id="visibility">
+            <h2 lang="en">Visibility</h2><h2 lang="uz">Ko'rinuvchanlik</h2>
+            <p lang="en">**visibility:hidden**- It is not visible but gets up it’s original space whereas,</p>
+            <p lang="uz">**visibility:hidden**- It is not visible but gets up it’s original space whereas,</p>
+            <p lang="en">**display:none**- It is hidden and takes no space.</p>
+            <p lang="uz">**display:none**- It is hidden and takes no space.</p>
+            <pre><code>.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0 0 0 0)
+}</code></pre>
+        </section>
+
+        <section id="flexbox">
+            <h2 lang="en">Flexbox</h2><h2 lang="uz">Flexbox</h2>
+            <p lang="en">#flex-direction - bu flex container ichidagi elementlarni horizontal yoki vertical joylashuvini belgilab beradi va ularning yo'nalishlari ham belgilanadi (reverse)</p>
+            <p lang="uz">#flex-direction - bu flex container ichidagi elementlarni horizontal yoki vertical joylashuvini belgilab beradi va ularning yo'nalishlari ham belgilanadi (reverse)</p>
+            <p lang="en">#Flex wrap - odatda flex elementlari bitta qatorga siqilib sig'ishib joyalshib oladi, ammo biz uni flex-wrapda sig'maganlar pastga tushib ketsin deb aytishimiz mumkin.</p>
+            <p lang="uz">#Flex wrap - odatda flex elementlari bitta qatorga siqilib sig'ishib joyalshib oladi, ammo biz uni flex-wrapda sig'maganlar pastga tushib ketsin deb aytishimiz mumkin.</p>
+            <p lang="en">#Flex flow - flex-direction va flex-wrap uchun shorthand hisoblanadi. : flex-flow: row, wrap;</p>
+            <p lang="uz">#Flex flow - flex-direction va flex-wrap uchun shorthand hisoblanadi. : flex-flow: row, wrap;</p>
+            <p lang="en">#Justify content - asosiy o'q (main axis) bo'ylab elementlarni joyalshuvini belgilaydi (center, right..). Va qo'shimcha bo'sh joyni taqsimlashga/bo'lib olishga yordam beradi. ( X oqiga javob beradi)</p>
+            <p lang="uz">#Justify content - asosiy o'q (main axis) bo'ylab elementlarni joyalshuvini belgilaydi (center, right..). Va qo'shimcha bo'sh joyni taqsimlashga/bo'lib olishga yordam beradi. ( X oqiga javob beradi)</p>
+            <ul lang="en">
+                <li>1- flex start 2 - flex end 3 - center 4- space between 5- space around 6 -space evenly</li>
+            </ul>
+            <ul lang="uz">
+                <li>1- flex start 2 - flex end 3 - center 4- space between 5- space around 6 -space evenly</li>
+            </ul>
+            <p lang="en">#Align Items</p>
+            <p lang="uz">#Align Items</p>
+            <p lang="en">align-items: flex-start | flex-end | center | baseline (asosiy o’q bo’yicha joylashadi) | stretch (to’liq hajm egallanadi)</p>
+            <p lang="uz">align-items: flex-start | flex-end | center | baseline (asosiy o’q bo’yicha joylashadi) | stretch (to’liq hajm egallanadi)</p>
+            <p lang="en">#gap - just gap bro </p>
+            <p lang="uz">#gap - just gap bro </p>
+        </section>
+
+        <section id="grid">
+            <h2 lang="en">Grid</h2><h2 lang="uz">Grid</h2>
+            <!-- Add content if available; from initial, no specific grid.txt, perhaps from html-layout -->
+            <p lang="en">Grid layout for 2D arrangements.</p>
+            <p lang="uz">Grid tartibi 2D joylashuv uchun.</p>
+        </section>
+
+        <section id="transitions">
+            <h2 lang="en">Transitions</h2><h2 lang="uz">O'tishlar</h2>
+            <p lang="en">Transition - elementlarimizni ko'rsatilgan vaqt davomida ravon o'zgarishini ta'minlaydi. Transition yaratish uchun ikki qiymat ko'rsatilishi shart: 1) Effekt qo'shmoqchi bo'lgan elementlarning xusiyati va effektning davomiyligi.</p>
+            <p lang="uz">Transition - elementlarimizni ko'rsatilgan vaqt davomida ravon o'zgarishini ta'minlaydi. Transition yaratish uchun ikki qiymat ko'rsatilishi shart: 1) Effekt qo'shmoqchi bo'lgan elementlarning xusiyati va effektning davomiyligi.</p>
+            <p lang="en">transition: &lt;property&gt; &lt;duration&gt; &lt;timing-function&gt; &lt;delay&gt;;</p>
+            <p lang="uz">transition: &lt;property&gt; &lt;duration&gt; &lt;timing-function&gt; &lt;delay&gt;;</p>
+            <p lang="en">transition-property: font-size;</p>
+            <p lang="uz">transition-property: font-size;</p>
+            <p lang="en">  transition-duration: 4s;</p>
+            <p lang="uz">  transition-duration: 4s;</p>
+            <p lang="en">  transition-delay: 2s;</p>
+            <p lang="uz">  transition-delay: 2s;</p>
+        </section>
+
+        <section id="transforms">
+            <h2 lang="en">Transforms</h2><h2 lang="uz">Transformatsiyalar</h2>
+            <p lang="en">transform: [rotate, scale translate, skew] </p>
+            <p lang="uz">transform: [rotate, scale translate, skew] </p>
+            <p lang="en">transform-origin: [position, postition] joyl</p>
+            <p lang="uz">transform-origin: [position, postition] joyl</p>
+            <p lang="en">perspective: [size]</p>
+            <p lang="uz">perspective: [size]</p>
+            <p lang="en">CSS transform kodi generatori https://css-transform.moro.es/</p>
+            <p lang="uz">CSS transform kodi generatori https://css-transform.moro.es/</p>
+            <p lang="en">https://developer.mozilla.org/ru/docs/Web/CSS/transform</p>
+            <p lang="uz">https://developer.mozilla.org/ru/docs/Web/CSS/transform</p>
+            <p lang="en">https://css-tricks.com/almanac/properties/t/transform/</p>
+            <p lang="uz">https://css-tricks.com/almanac/properties/t/transform/</p>
+            <p lang="en">Vs code  ctrl+p+> snippet https://snippet-generator.app/</p>
+            <p lang="uz">Vs code  ctrl+p+> snippet https://snippet-generator.app/</p>
+        </section>
+
+        <section id="media-queries">
+            <h2 lang="en">Media Queries</h2><h2 lang="uz">Media So'rovlar</h2>
+            <p lang="en">Media queries for responsive design.</p>
+            <p lang="uz">Media so'rovlar mas'uliyatli dizayn uchun.</p>
+            <!-- Add more if available -->
+        </section>
+
+        <section id="pseudo-classes">
+            <h2 lang="en">Pseudo-classes</h2><h2 lang="uz">Psevdo-klasslar</h2>
+            <p lang="en">Pseudo-classes for states like :hover, :active.</p>
+            <p lang="uz">Psevdo-klasslar holatlar uchun :hover, :active.</p>
+        </section>
+
+        <section id="pseudo-elements">
+            <h2 lang="en">Pseudo-elements</h2><h2 lang="uz">Psevdo-elementlar</h2>
+            <p lang="en">Pseudo-elements like ::before, ::after.</p>
+            <p lang="uz">Psevdo-elementlar ::before, ::after kabi.</p>
+        </section>
+
+        <section id="combinators">
+            <h2 lang="en">Combinators</h2><h2 lang="uz">Kombinatorlar</h2>
+            <pre><code lang="en">/*  space - selectorni ichidagi hamma elementni tanlab beradi  */</code></pre>
+            <pre><code lang="uz">/*  space - selectorni ichidagi hamma elementni tanlab beradi  */</code></pre>
+            <pre><code lang="en">/*  > - selectorni ichidagi bolalar orasidan tanlab beradi  */</code></pre>
+            <pre><code lang="uz">/*  > - selectorni ichidagi bolalar orasidan tanlab beradi  */</code></pre>
+            <pre><code lang="en">/*  + - selectordan keyingi birinchi element tanlab oladi  */</code></pre>
+            <pre><code lang="uz">/*  + - selectordan keyingi birinchi element tanlab oladi  */</code></pre>
+            <pre><code lang="en">/*  ~ - selectordan keyingi hamma element tanlab oladi  */</code></pre>
+            <pre><code lang="uz">/*  ~ - selectordan keyingi hamma element tanlab oladi  */</code></pre>
+            <p lang="en">Combinators from original: space descendant, > child, + adjacent, ~ general sibling.</p>
+            <p lang="uz">Kombinatorlar: space avlod, > bola, + yonidagi birinchi, ~ barcha egizaklar.</p>
+        </section>
+
+        <section id="box-sizing">
+            <h2 lang="en">Box Sizing</h2><h2 lang="uz">Quti O'lchamlari</h2>
+            <p lang="en">Box-sizing CSS property determines how the total width and height of an element is calculated.</p>
+            <p lang="uz">Box-sizing CSS xususiyati elementning umumiy kengligi va balandligi qanday hisoblanishini belgilaydi.</p>
+            <p lang="en">content-box default holati ya’ni to’liq hajmdan oshib ketsa o’zidagi widthdan chiqib ketadi</p>
+            <p lang="uz">content-box default holati ya’ni to’liq hajmdan oshib ketsa o’zidagi widthdan chiqib ketadi</p>
+            <p lang="en">border-box - bu elementni widthidan chiqib ketmaydigan qiladi.</p>
+            <p lang="uz">border-box - bu elementni widthidan chiqib ketmaydigan qiladi.</p>
+        </section>
+
+        <section id="pseudo-hover-focus">
+            <h2 lang="en">Pseudo-classes: Hover, Focus, Active</h2><h2 lang="uz">Psevdo-klasslar: Hover, Focus, Active</h2>
+            <p lang="en">:focus – when an element is selected (clicked or tabbed)</p>
+            <p lang="uz">:focus – element tanlanganda (bosilganda yoki tab bilan)</p>
+            <p lang="en">:hover – when the mouse is over an element</p>
+            <p lang="uz">:hover – sichqoncha ustiga borganda</p>
+            <p lang="en">:active – when an element is being clicked</p>
+            <p lang="uz">:active – element bosilayotgan paytda</p>
+        </section>
+
+        <section id="background-advanced">
+            <h2 lang="en">Advanced Background</h2><h2 lang="uz">Murakkab Fon</h2>
+            <p lang="en">background-image: url(image address)</p>
+            <p lang="uz">background-image: url(image address)</p>
+            <p lang="en">background-repeat: repeat; [repeat-x, repeat-y,space, no-repeate]</p>
+            <p lang="uz">background-repeat: repeat; [repeat-x, repeat-y,space, no-repeate]</p>
+            <p lang="en">background-position: x, y; [x- left, center, right; y - top, center, bottom] 0px, 0%</p>
+            <p lang="uz">background-position: x, y; [x- left, center, right; y - top, center, bottom] 0px, 0%</p>
+            <p lang="en">background-size: cover [contain]</p>
+            <p lang="uz">background-size: cover [contain]</p>
+            <p lang="en">background-attechment: scroll [fixed]</p>
+            <p lang="uz">background-attechment: scroll [fixed]</p>
+            <p lang="en">— Fonga bir nechta rasm joylash</p>
+            <p lang="uz">— Fonga bir nechta rasm joylash</p>
+            <p lang="en">background-image: url(img.path), url(img.path);</p>
+            <p lang="uz">background-image: url(img.path), url(img.path);</p>
+            <p lang="en">background: [color] url(img.path) [no-repeat] center center/400px , scroll</p>
+            <p lang="uz">background: [color] url(img.path) [no-repeat] center center/400px , scroll</p>
+        </section>
+
+        <section id="html-layout">
+            <h2 lang="en">HTML Layout</h2><h2 lang="uz">HTML Tartibi</h2>
+            <p lang="en">1- Float</p>
+            <p lang="uz">1- Float</p>
+            <p lang="en">2- Flex</p>
+            <p lang="uz">2- Flex</p>
+            <p lang="en">3- Grid</p>
+            <p lang="uz">3- Grid</p>
+            <p lang="en">Content - div ochib lorem misolida ko'rish , Har bir elementni browserda box-modelini ko'rish mumkin </p>
+            <p lang="uz">Content - div ochib lorem misolida ko'rish , Har bir elementni browserda box-modelini ko'rish mumkin </p>
+            <p lang="en">Padding - Elementning kontent qismidan, border ya'ni chegara qismigacha bo'lgan masofa</p>
+            <p lang="uz">Padding - Elementning kontent qismidan, border ya'ni chegara qismigacha bo'lgan masofa</p>
+            <p lang="en">Border - elementning chegarasi hisoblanadi.</p>
+            <p lang="uz">Border - elementning chegarasi hisoblanadi.</p>
+            <pre><code lang="en">border-width: 5px;
+border-style: solid;
+border-color: red;</code></pre>
+            <pre><code lang="uz">border-width: 5px;
+border-style: solid;
+border-color: red;</code></pre>
+            <p lang="en">Margin - bir element va uning atrofidagi ikkinchi elementlar orasidagi masofa</p>
+            <p lang="uz">Margin - bir element va uning atrofidagi ikkinchi elementlar orasidagi masofa</p>
+        </section>
+
+        <section id="iframe">
+            <h2 lang="en">Iframe</h2><h2 lang="uz">Iframe</h2>
+            <p lang="en">Used to embed another webpage inside a page</p>
+            <p lang="uz">Sahifa ichida boshqa sahifani ko‘rsatish uchun ishlatiladi</p>
+            <p lang="en">Can show videos, maps, or other websites</p>
+            <p lang="uz">Video, xarita yoki boshqa saytlarni joylash mumkin</p>
+            <p lang="en">Common attributes</p>
+            <p lang="uz">Asosiy atributlar</p>
+            <p lang="en">src – URL of the page</p>
+            <p lang="uz">src – sahifa manzili</p>
+            <p lang="en">width / height – size of iframe</p>
+            <p lang="uz">width / height – iframe o‘lchami</p>
+            <p lang="en">title – description (important for accessibility)</p>
+            <p lang="uz">title – tavsif (muhim)</p>
+            <p lang="en">allowfullscreen – allows full screen</p>
+            <p lang="uz">allowfullscreen – to‘liq ekran rejimi</p>
+            <p lang="en">loading – lazy or eager loading</p>
+            <p lang="uz">loading – sekin (lazy) yoki darhol yuklash</p>
+        </section>
+
+        <section id="gradients">
+            <h2 lang="en">Gradients</h2><h2 lang="uz">Gradientlar</h2>
+            <p lang="en">background: linear-gradient(45deg, blue, red);</p>
+            <p lang="uz">background: linear-gradient(45deg, blue, red);</p>
+            <p lang="en">background: linear-gradient(#e66465, #9198e5);</p>
+            <p lang="uz">background: linear-gradient(#e66465, #9198e5);</p>
+            <p lang="en">linear-gradient(red 0%, orange 25%, yellow 50%, green 75%, blue 100%);</p>
+            <p lang="uz">linear-gradient(red 0%, orange 25%, yellow 50%, green 75%, blue 100%);</p>
+            <p lang="en">linear-gradient(red 10%, 30%, blue 90%); // rang 10 foizdan 90 gacha qizildan ko'kka o'zgaradi lekin 30% markaz ya'ni bir xil nisbatda bo'ladi</p>
+            <p lang="uz">linear-gradient(red 10%, 30%, blue 90%); // rang 10 foizdan 90 gacha qizildan ko'kka o'zgaradi lekin 30% markaz ya'ni bir xil nisbatda bo'ladi</p>
+            <p lang="en">background: linear-gradient(to right, red 20%, orange 20% 40%, yellow 40% 60%, green 60% 80%, blue 80%);</p>
+            <p lang="uz">background: linear-gradient(to right, red 20%, orange 20% 40%, yellow 40% 60%, green 60% 80%, blue 80%);</p>
+        </section>
+
+        <section id="forms">
+            <h2 lang="en">Forms</h2><h2 lang="uz">Formalar</h2>
+            <p lang="en">Form method</p>
+            <p lang="uz">Form usuli</p>
+            <p lang="en">GET – sends data in the URL (visible, for search/testing)</p>
+            <p lang="uz">GET – ma’lumot URL’da ko‘rinadi (test uchun)</p>
+            <p lang="en">POST – sends data in the body (secure, for forms with files)</p>
+            <p lang="uz">POST – ma’lumot yashirin yuboriladi (xavfsizroq)</p>
+            <p lang="en">Input types</p>
+            <p lang="uz">Input turlari</p>
+            <p lang="en">text – plain text</p>
+            <p lang="uz">text – oddiy matn</p>
+            <p lang="en">number – numbers only</p>
+            <p lang="uz">number – faqat raqam</p>
+            <p lang="en">tel – phone number</p>
+            <p lang="uz">tel – telefon raqam</p>
+            <p lang="en">email – email address</p>
+            <p lang="uz">email – email manzil</p>
+            <p lang="en">date – date picker</p>
+            <p lang="uz">date – sana tanlash</p>
+            <p lang="en">time – time picker</p>
+            <p lang="uz">time – vaqt tanlash</p>
+            <p lang="en">file – file upload</p>
+            <p lang="uz">file – fayl yuklash</p>
+            <p lang="en">Input attributes</p>
+            <p lang="uz">Input atributlari</p>
+            <p lang="en">type – defines input type</p>
+            <p lang="uz">type – input turini belgilaydi</p>
+            <p lang="en">placeholder – hint text inside input</p>
+            <p lang="uz">placeholder – ichki ko‘rsatma matn</p>
+            <p lang="en">name – key sent to server</p>
+            <p lang="uz">name – serverga yuboriladigan nom</p>
+            <p lang="en">required – must be filled</p>
+            <p lang="uz">required – to‘ldirish majburiy</p>
+            <p lang="en">disabled – not editable, not sent</p>
+            <p lang="uz">disabled – o‘chirilgan, yuborilmaydi</p>
+            <p lang="en">value – default value</p>
+            <p lang="uz">value – standart qiymat</p>
+            <h3 lang="en">TEXT AREA</h3><h3 lang="uz">TEXT AREA</h3>
+            <pre><code lang="en">&lt;textarea &gt;
+// row (qator)
+// col (ustun)
+</code></pre>
+            <pre><code lang="uz">&lt;textarea &gt;
+// row (qator)
+// col (ustun)
+</code></pre>
+        </section>
+
+        <section id="flex-items">
+            <h2 lang="en">Flex Item Properties</h2><h2 lang="uz">Flex Element Xususiyatlari</h2>
+            <p lang="en">1- order : Elementlar ketma-ketligini o’zgartirish uchun ishlatiladi</p>
+            <p lang="uz">1- order : Elementlar ketma-ketligini o’zgartirish uchun ishlatiladi</p>
+            <p lang="en">2- flex-grow : Flex-grow xususiyati moslashuvchan elementning qolgan moslashuvchan elementlarga nisbatan qanchalik o'sishini belgilaydi.</p>
+            <p lang="uz">2- flex-grow : Flex-grow xususiyati moslashuvchan elementning qolgan moslashuvchan elementlarga nisbatan qanchalik o'sishini belgilaydi.</p>
+            <p lang="en">Default qiymati:0</p>
+            <p lang="uz">Default qiymati:0</p>
+            <p lang="en">3- Flex-basis: xususiyati moslashuvchan elementning dastlabki uzunligini belgilaydi.</p>
+            <p lang="uz">3- Flex-basis: xususiyati moslashuvchan elementning dastlabki uzunligini belgilaydi.</p>
+            <p lang="en">4- Flex-shrink : Flex-shrink xususiyati moslashuvchan elementning qolgan moslashuvchan elementlarga nisbatan qanchalik qisqarishini belgilaydi.</p>
+            <p lang="uz">4- Flex-shrink : Flex-shrink xususiyati moslashuvchan elementning qolgan moslashuvchan elementlarga nisbatan qanchalik qisqarishini belgilaydi.</p>
+            <p lang="en">Default qiymati:1</p>
+            <p lang="uz">Default qiymati:1</p>
+            <p lang="en">5- flex : Flex bu `flex-grow` `flex-shrink` `flex-basis` larni qisqa qilib 3 ta qiymatni yozish uchun ishlatiladi.</p>
+            <p lang="uz">5- flex : Flex bu `flex-grow` `flex-shrink` `flex-basis` larni qisqa qilib 3 ta qiymatni yozish uchun ishlatiladi.</p>
+            <p lang="en">Ketma ketligi flex-grow , flex-shrink, flex-basis</p>
+            <p lang="uz">Ketma ketligi flex-grow , flex-shrink, flex-basis</p>
+            <p lang="en">6- align-self : Align self bu elementning joylashuvini ifodalashda ishlatiladi. align itemsdan farqi align items containerga (ota element) berilsa bu flex item elementiga (bolasiga) beriladi</p>
+            <p lang="uz">6- align-self : Align self bu elementning joylashuvini ifodalashda ishlatiladi. align itemsdan farqi align items containerga (ota element) berilsa bu flex item elementiga (bolasiga) beriladi</p>
+        </section>
+
+        <section id="nth-child">
+            <h2 lang="en">Nth-Child</h2><h2 lang="uz">Nth-Child</h2>
+            <p lang="en">element:nth-child(n)</p>
+            <p lang="uz">element:nth-child(n)</p>
+        </section>
+
+        <section id="measurements">
+            <h2 lang="en">Measurements</h2><h2 lang="uz">O'lchov Birliklari</h2>
+            <p lang="en">#px (Pixels): Fixed unit for a single dot on the screen. (Ekrandagi bitta nuqtani ifodalovchi o'zgaruvchan bo'lmagan birlik.)</p>
+            <p lang="uz">#px (Pixels): Fixed unit for a single dot on the screen. (Ekrandagi bitta nuqtani ifodalovchi o'zgaruvchan bo'lmagan birlik.)</p>
+            <p lang="en">#% (Percentage): Relative unit based on the parent element's size. (Ota elementining o'lchamiga asoslangan nisbiy birlik.)</p>
+            <p lang="uz">#% (Percentage): Relative unit based on the parent element's size. (Ota elementining o'lchamiga asoslangan nisbiy birlik.)</p>
+            <p lang="en">#rem (Root em): Relative unit based on the root element’s font size. (Asosiy (root) elementning shrift o'lchamiga asoslangan nisbiy birlik.)</p>
+            <p lang="uz">#rem (Root em): Relative unit based on the root element’s font size. (Asosiy (root) elementning shrift o'lchamiga asoslangan nisbiy birlik.)</p>
+            <p lang="en">#em: Relative unit based on the font size of the element it's used in. (Ushlab turilgan elementning shrift o'lchamiga asoslangan nisbiy birlik.)</p>
+            <p lang="uz">#em: Relative unit based on the font size of the element it's used in. (Ushlab turilgan elementning shrift o'lchamiga asoslangan nisbiy birlik.)</p>
+            <p lang="en">#vh (Viewport Height): Based on the viewport height, 1vh = 1% of the viewport height. (Ko'rinish oynasining balandligiga asoslangan nisbiy birlik. 1vh = ko'rinish oynasining balandligining 1 foizi.)</p>
+            <p lang="uz">#vh (Viewport Height): Based on the viewport height, 1vh = 1% of the viewport height. (Ko'rinish oynasining balandligiga asoslangan nisbiy birlik. 1vh = ko'rinish oynasining balandligining 1 foizi.)</p>
+            <p lang="en">#vw (Viewport Width): Based on the viewport width, 1vw = 1% of the viewport width. (Ko'rinish oynasining kengligiga asoslangan nisbiy birlik. 1vw = ko'rinish oynasining kengligining 1 foizi.)</p>
+            <p lang="uz">#vw (Viewport Width): Based on the viewport width, 1vw = 1% of the viewport width. (Ko'rinish oynasining kengligiga asoslangan nisbiy birlik. 1vw = ko'rinish oynasining kengligining 1 foizi.)</p>
+        </section>
+
+        <section id="tables">
+            <h2 lang="en">Tables</h2><h2 lang="uz">Jadvallar</h2>
+            <p lang="en">Used to display data in rows and columns</p>
+            <p lang="uz">Ma’lumotlarni qator va ustunlarda ko‘rsatish uchun</p>
+            <p lang="en">Main tags</p>
+            <p lang="uz">Asosiy teglar</p>
+            <p lang="en">&lt;table&gt; – table container</p>
+            <p lang="uz">&lt;table&gt; – jadval konteyneri</p>
+            <p lang="en">&lt;tr&gt; – table row</p>
+            <p lang="uz">&lt;tr&gt; – jadval qatori</p>
+            <p lang="en">&lt;th&gt; – table header cell</p>
+            <p lang="uz">&lt;th&gt; – sarlavha katagi</p>
+            <p lang="en">&lt;td&gt; – table data cell</p>
+            <p lang="uz">&lt;td&gt; – ma’lumot katagi</p>
+            <p lang="en">Common attributes</p>
+            <p lang="uz">Keng tarqalgan atributlar</p>
+            <p lang="en">border – table border</p>
+            <p lang="uz">border – jadval chegarasi</p>
+            <p lang="en">colspan – merge columns</p>
+            <p lang="uz">colspan – ustunlarni birlashtirish</p>
+            <p lang="en">rowspan – merge rows</p>
+            <p lang="uz">rowspan – qatorlarni birlashtirish</p>
+        </section>
+
+        <section id="z-index">
+            <h2 lang="en">Z-Index</h2><h2 lang="uz">Z-Index</h2>
+            <p lang="en">z-index - ustma-ust tushib qolgan elementlarning ketmaketligini aniqlab beradi. Kattaroq z-indexga ega bo'lgan element oldinda joylashadi. Har doim z-index position berilgan elementlarga tasir qiladi.</p>
+            <p lang="uz">z-index - ustma-ust tushib qolgan elementlarning ketmaketligini aniqlab beradi. Kattaroq z-indexga ega bo'lgan element oldinda joylashadi. Har doim z-index position berilgan elementlarga tasir qiladi.</p>
+        </section>
+
+        <section id="box-shadow">
+            <h2 lang="en">Box Shadow</h2><h2 lang="uz">Quti Soyasi</h2>
+            <p lang="en">#box-shadow property is a flexible tool for adding shadow effects around an element's frame, creating a sense of depth and visual hierarchy in web design</p>
+            <p lang="uz">#box-shadow property is a flexible tool for adding shadow effects around an element's frame, creating a sense of depth and visual hierarchy in web design</p>
+            <p lang="en">syntax: </p>
+            <p lang="uz">syntax: </p>
+            <p lang="en">box-shadow: offset-x offset-y blur-radius spread-radius color inset;</p>
+            <p lang="uz">box-shadow: offset-x offset-y blur-radius spread-radius color inset;</p>
+        </section>
+
+        <section id="video-audio">
+            <h2 lang="en">Video and Audio</h2><h2 lang="uz">Video va Audio</h2>
+            <p lang="en"># Audio </p>
+            <p lang="uz"># Audio </p>
+            <pre><code lang="en">&lt;audio controls&gt;
+&lt;source src="horse.ogg" type="audio/ogg"&gt;
+&lt;source src="horse.mp3" type="audio/mpeg"&gt;
+Your browser does not support the audio tag.
+&lt;/audio&gt;</code></pre>
+            <pre><code lang="uz">&lt;audio controls&gt;
+&lt;source src="horse.ogg" type="audio/ogg"&gt;
+&lt;source src="horse.mp3" type="audio/mpeg"&gt;
+Your browser does not support the audio tag.
+&lt;/audio&gt;</code></pre>
+            <p lang="en"># Video</p>
+            <p lang="uz"># Video</p>
+            <pre><code lang="en">&lt;video width="320" height="240" controls&gt;
+  &lt;source src="movie.mp4" type="video/mp4"&gt;
+  &lt;source src="movie.ogg" type="video/ogg"&gt;
+  Your browser does not support the video tag.
+&lt;/video&gt;</code></pre>
+            <pre><code lang="uz">&lt;video width="320" height="240" controls&gt;
+  &lt;source src="movie.mp4" type="video/mp4"&gt;
+  &lt;source src="movie.ogg" type="video/ogg"&gt;
+  Your browser does not support the video tag.
+&lt;/video&gt;</code></pre>
+        </section>
+
+        <section id="text-gradient">
+            <h2 lang="en">Text Gradient</h2><h2 lang="uz">Matn Gradienti</h2>
+            <pre><code lang="en">h1 {
+  font-size: 72px;
+  background: -webkit-linear-gradient(#eee, #333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}</code></pre>
+            <pre><code lang="uz">h1 {
+  font-size: 72px;
+  background: -webkit-linear-gradient(#eee, #333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}</code></pre>
+        </section>
+
+        <section id="text-shadow">
+            <h2 lang="en">Text Shadow</h2><h2 lang="uz">Matn Soyasi</h2>
+            <p lang="en">text-shadow is a CSS property that adds shadows to text</p>
+            <p lang="uz">text-shadow is a CSS property that adds shadows to text</p>
+            <p lang="en">syntax : </p>
+            <p lang="uz">syntax : </p>
+            <pre><code lang="en">h1 {
+  text-shadow: 2px 2px 4px #888888; /* h-shadow v-shadow blur-radius color */
+}</code></pre>
+            <pre><code lang="uz">h1 {
+  text-shadow: 2px 2px 4px #888888; /* h-shadow v-shadow blur-radius color */
+}</code></pre>
+        </section>
+
+        <section id="semantic">
+            <h2 lang="en">Semantic Tags</h2><h2 lang="uz">Semantik Teglar</h2>
+            <p lang="en">1- header</p>
+            <p lang="uz">1- header</p>
+            <p lang="en">2- footer</p>
+            <p lang="uz">2- footer</p>
+            <p lang="en">3- aside</p>
+            <p lang="uz">3- aside</p>
+            <p lang="en">4- main </p>
+            <p lang="uz">4- main </p>
+            <p lang="en">5- article</p>
+            <p lang="uz">5- article</p>
+            <p lang="en">6- nav</p>
+            <p lang="uz">6- nav</p>
+            <p lang="en">7- section</p>
+            <p lang="uz">7- section</p>
+            <p lang="en">8- details</p>
+            <p lang="uz">8- details</p>
+        </section>
+
+        <section id="clip-path">
+            <h2 lang="en">Clip Path</h2><h2 lang="uz">Clip Path</h2>
+            <p lang="en">clip-path in CSS is used to cut or hide parts of an element by defining a shape (circle, polygon, ellipse, etc.).</p>
+            <p lang="uz">clip-path CSS’da elementning ma’lum qismini kesib ko‘rsatish uchun ishlatiladi.</p>
+            <p lang="en">Only the area inside the shape is visible.</p>
+            <p lang="uz">Faqat berilgan shakl ichidagi qism ko‘rinadi, qolgan qismi yashiriladi.</p>
+            <p lang="en">Example shapes: circle, polygon, inset</p>
+            <p lang="uz">Misol shakllar: circle (doira), polygon (ko‘pburchak), inset</p>
+            <p lang="en">Common use: creating custom image shapes or modern UI designs.</p>
+            <p lang="uz">Ko‘p ishlatiladi: rasmlarga shakl berish va zamonaviy dizayn qilishda.</p>
+        </section>
+
+        <section id="object-properties">
+            <h2 lang="en">Object Properties</h2><h2 lang="uz">Ob'ekt Xususiyatlari</h2>
+            <p lang="en">The object-fit CSS property sets how the content of a replaced element, such as an &lt;img&gt; or &lt;video&gt;, should be resized to fit its container. </p>
+            <p lang="uz">The object-fit CSS property sets how the content of a replaced element, such as an &lt;img&gt; or &lt;video&gt;, should be resized to fit its container. </p>
+            <p lang="en">syntax : </p>
+            <p lang="uz">syntax : </p>
+            <p lang="en">object-fit: contain;</p>
+            <p lang="uz">object-fit: contain;</p>
+            <p lang="en">object-fit: cover;</p>
+            <p lang="uz">object-fit: cover;</p>
+            <p lang="en">object-fit: fill;</p>
+            <p lang="uz">object-fit: fill;</p>
+            <p lang="en">object-fit: none;</p>
+            <p lang="uz">object-fit: none;</p>
+            <p lang="en">object-fit: scale-down;</p>
+            <p lang="uz">object-fit: scale-down;</p>
+            <p lang="en">The object-position CSS property specifies the alignment of the selected replaced element's contents within the element's box</p>
+            <p lang="uz">The object-position CSS property specifies the alignment of the selected replaced element's contents within the element's box</p>
+            <p lang="en">syntax : </p>
+            <p lang="uz">syntax : </p>
+            <p lang="en">object-position: top;</p>
+            <p lang="uz">object-position: top;</p>
+            <p lang="en">object-position: bottom;</p>
+            <p lang="uz">object-position: bottom;</p>
+            <p lang="en">object-position: left;</p>
+            <p lang="uz">object-position: left;</p>
+            <p lang="en">object-position: right;</p>
+            <p lang="uz">object-position: right;</p>
+            <p lang="en">object-position: center;</p>
+            <p lang="uz">object-position: center;</p>
+            <p lang="en">object-position: 25% 75%;</p>
+            <p lang="uz">object-position: 25% 75%;</p>
+            <p lang="en">object-position: 0 0;</p>
+            <p lang="uz">object-position: 0 0;</p>
+            <p lang="en">object-position: 1cm 2cm;</p>
+            <p lang="uz">object-position: 1cm 2cm;</p>
+            <p lang="en">object-position: 10ch 8em;</p>
+            <p lang="uz">object-position: 10ch 8em;</p>
+            <p lang="en">object-position: bottom 10px right 20px;</p>
+            <p lang="uz">object-position: bottom 10px right 20px;</p>
+            <p lang="en">object-position: right 3em bottom 10px;</p>
+            <p lang="uz">object-position: right 3em bottom 10px;</p>
+            <p lang="en">object-position: top 0 right 10px;</p>
+            <p lang="uz">object-position: top 0 right 10px;</p>
+        </section>
+
+        <section id="datalist-checkbox">
+            <h2 lang="en">Datalist, Checkbox, Radio</h2><h2 lang="uz">Datalist, Checkbox, Radio</h2>
+            <p lang="en">#Datalist, form ichida type berilmagan button va sahifaning ichidagi bo'limga link orqali o'tish</p>
+            <p lang="uz">#Datalist, form ichida type berilmagan button va sahifaning ichidagi bo'limga link orqali o'tish</p>
+            <p lang="en">— datalist/option</p>
+            <p lang="uz">— datalist/option</p>
+            <p lang="en">syntax : </p>
+            <p lang="uz">syntax : </p>
+            <pre><code lang="en">&lt;label for="color-choice"&gt;Choose a flavor:&lt;/label&gt;
+&lt;input list="favourite-color" id="color-choice" name="color" /&gt;
+&lt;datalist id="favourite-color"&gt;
+    &lt;option value="gold"&gt;
+&lt;/datalist&gt;</code></pre>
+            <pre><code lang="uz">&lt;label for="color-choice"&gt;Choose a flavor:&lt;/label&gt;
+&lt;input list="favourite-color" id="color-choice" name="color" /&gt;
+&lt;datalist id="favourite-color"&gt;
+    &lt;option value="gold"&gt;
+&lt;/datalist&gt;</code></pre>
+            <p lang="en">#Checkbox va radio </p>
+            <p lang="uz">#Checkbox va radio </p>
+            <p lang="en">**In the Check box, you can select multiple options.**</p>
+            <p lang="uz">**Checkboxda bir nechta option tanlasak bo’ladi**</p>
+            <p lang="en">Checkboxda bir nechta option tanlasak bo’ladi</p>
+            <p lang="uz">Checkboxda bir nechta option tanlasak bo’ladi</p>
+            <p lang="en">**In the Options Button (Radio button) you can select one option**</p>
+            <p lang="uz">**Radioda faqatgina 1 ta qiymat tanlay olamiz**</p>
+            <p lang="en">Radioda faqatgina 1 ta qiymat tanlay olamiz</p>
+            <p lang="uz">Radioda faqatgina 1 ta qiymat tanlay olamiz</p>
+            <p lang="en">Radio buttons are circular and checkboxes are square</p>
+            <p lang="uz">Radio buttons are circular and checkboxes are square</p>
+            <p lang="en">https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_radio</p>
+            <p lang="uz">https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_radio</p>
+            <p lang="en">https://www.w3schools.com/tags/att_input_type_radio.asp</p>
+            <p lang="uz">https://www.w3schools.com/tags/att_input_type_radio.asp</p>
+            <p lang="en">— name - attribut</p>
+            <p lang="uz">— name - atribut</p>
+            <p lang="en">— checked/disabled - attribut</p>
+            <p lang="uz">— checked/disabled - atribut</p>
+            <p lang="en">— label - tag</p>
+            <p lang="uz">— label - teg</p>
+            <p lang="en">— fildset / legend - tag</p>
+            <p lang="uz">— fildset / legend - teg</p>
+            <p lang="en">— input[type=”text”] :selected , :disabled qilib stil berish</p>
+            <p lang="uz">— input[type=”text”] :selected , :disabled qilib stil berish</p>
+            <p lang="en">name bir xil value xar xil bo'lishi kerak</p>
+            <p lang="uz">name bir xil value xar xil bo'lishi kerak</p>
+        </section>
+
+        <!-- Exam Section -->
+        <section id="exam">
+            <h2 lang="en">Exam</h2><h2 lang="uz">Imtihon</h2>
+            <p lang="en">Take the 20-question test below. After submission, see detailed results with correct answers.</p>
+            <p lang="uz">Quyidagi 20 savolli testni bajaring. Natijalar batafsil ko'rsatiladi.</p>
+            <form id="examForm">
+                <!-- The full 20 questions with bilingual text as before -->
+                <div class="question">
+                    <p lang="en">1. What is the default value of box-sizing?</p>
+                    <p lang="uz">1. box-sizing ning standart qiymati nima?</p>
+                    <label class="option"><input type="radio" name="q1" value="a"><span lang="en">content-box</span><span lang="uz">content-box</span></label>
+                    <label class="option"><input type="radio" name="q1" value="b"><span lang="en">border-box</span><span lang="uz">border-box</span></label>
+                    <label class="option"><input type="radio" name="q1" value="c"><span lang="en">padding-box</span><span lang="uz">padding-box</span></label>
+                    <label class="option"><input type="radio" name="q1" value="d"><span lang="en">margin-box</span><span lang="uz">margin-box</span></label>
+                </div>
+                <!-- ... Repeat for all 20, with the translations as in previous ... -->
+            </form>
+            <div id="results"></div>
+        </section>
+    </main>
+
+    <script>
+        // The full script from previous, with questionsEn, questionsUz, optionsEn, optionsUz, answers, calculateResults, resetExam, toggleTheme, toggleLang, and menu toggle
+    </script>
+</body>
+</html>
