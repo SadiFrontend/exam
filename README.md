@@ -4,8 +4,7 @@
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-A comprehensive, bilingual (English/Uzbek) interactive guide for front-end development topics from days 5-12. Features study sections, dark mode, language toggle, hidable sidebar, and a 20-question exam with instant results.
-
+A comprehensive, bilingual (English/Uzbek) interactive guide for front-end development topics from days 5-12. Features study sections, dark mode, language toggle, hidable sidebar.
 ## 📖 Table of Contents
 
 - [Description](#description)
